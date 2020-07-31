@@ -88,9 +88,9 @@ class Gridcoin < Formula
   option "without-gui", "Do not compile the graphical client"
 
   depends_on "boost"
-  depends_on "berkeley-db@4"
+  depends_on "berkeley-db"
   depends_on "leveldb"
-  depends_on "openssl"
+  depends_on "libressl"
   depends_on "miniupnpc"
   depends_on "libzip"
   depends_on "pkg-config" => :build
@@ -119,10 +119,10 @@ class Gridcoin < Formula
       args = %W[
         BOOST_INCLUDE_PATH=#{Formula["boost"].include}
         BOOST_LIB_PATH=#{Formula["boost"].lib}
-        OPENSSL_INCLUDE_PATH=#{Formula["openssl"].include}
-        OPENSSL_LIB_PATH=#{Formula["openssl"].lib}
-        BDB_INCLUDE_PATH=#{Formula["berkeley-db@4"].include}
-        BDB_LIB_PATH=#{Formula["berkeley-db@4"].lib}
+        OPENSSL_INCLUDE_PATH=#{Formula["libressl"].include}
+        OPENSSL_LIB_PATH=#{Formula["libressl"].lib}
+        BDB_INCLUDE_PATH=#{Formula["berkeley-db"].include}
+        BDB_LIB_PATH=#{Formula["berkeley-db"].lib}
         MINIUPNPC_INCLUDE_PATH=#{Formula["miniupnpc"].include}
         MINIUPNPC_LIB_PATH=#{Formula["miniupnpc"].lib}
         QRENCODE_INCLUDE_PATH=#{Formula["qrencode"].include}
