@@ -48,47 +48,12 @@ class Gridcoin < Formula
     EOS
   end
 
-  devel do
-    url "https://github.com/gridcoin/Gridcoin-Research.git", :using => :git, :branch => "staging"
-    version "3.7.15.0-dev"
-    patch <<-EOS
-      diff --git a/configure.ac b/configure.ac
-      index eb96af9c..8b692612 100644
-      --- a/configure.ac
-      +++ b/configure.ac
-      @@ -57,14 +57,8 @@ AX_CXX_COMPILE_STDCXX([11], [noext], [mandatory], [nodefault])
-       dnl Check if -latomic is required for <std::atomic>
-       CHECK_ATOMIC
-      
-      -dnl Unless the user specified OBJCXX, force it to be the same as CXX. This ensures
-      -dnl that we get the same -std flags for both.
-      -m4_ifdef([AC_PROG_OBJCXX],[
-      -if test "x${OBJCXX+set}" = "x"; then
-      -  OBJCXX="${CXX}"
-      -fi
-       AC_PROG_OBJCXX
-      -])
-      +OBJCXX="${CXX}"
-      
-       dnl Libtool init checks.
-       LT_INIT([pic-only])
-      @@ -1171,5 +1165,7 @@ echo "  CFLAGS        = $CFLAGS"
-       echo "  CPPFLAGS      = $CPPFLAGS"
-       echo "  CXX           = $CXX"
-       echo "  CXXFLAGS      = $CXXFLAGS"
-      +echo "  OBJCXX        = $OBJCXX"
-      +echo "  OBJCXXFLAGS   = $OBJCXXFLAGS"
-       echo "  LDFLAGS       = $LDFLAGS"
-       echo
-      EOS
-  end
-
   option "without-upnp", "Do not compile with UPNP support"
   option "with-cli", "Also compile the command line client"
   option "without-gui", "Do not compile the graphical client"
 
   depends_on "boost"
-  depends_on "berkeley-db@4"
+  depends_on "berkeley-db"
   depends_on "leveldb"
   depends_on "openssl"
   depends_on "miniupnpc"
@@ -121,8 +86,8 @@ class Gridcoin < Formula
         BOOST_LIB_PATH=#{Formula["boost"].lib}
         OPENSSL_INCLUDE_PATH=#{Formula["openssl"].include}
         OPENSSL_LIB_PATH=#{Formula["openssl"].lib}
-        BDB_INCLUDE_PATH=#{Formula["berkeley-db@4"].include}
-        BDB_LIB_PATH=#{Formula["berkeley-db@4"].lib}
+        BDB_INCLUDE_PATH=#{Formula["berkeley-db"].include}
+        BDB_LIB_PATH=#{Formula["berkeley-db"].lib}
         MINIUPNPC_INCLUDE_PATH=#{Formula["miniupnpc"].include}
         MINIUPNPC_LIB_PATH=#{Formula["miniupnpc"].lib}
         QRENCODE_INCLUDE_PATH=#{Formula["qrencode"].include}
@@ -130,7 +95,7 @@ class Gridcoin < Formula
       ]
 
       system "./autogen.sh"
-      system "unset OBJCXX ; ./configure"
+      system "unset OBJCXX ; ./configure --with-incompatible-bdb"
       system "make appbundle"
       prefix.install "gridcoinresearch.app"
     end
