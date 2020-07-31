@@ -75,7 +75,7 @@ class Gridcoin < Formula
     if build.with? "cli"
       chmod 0755, "src/leveldb/build_detect_platform"
       mkdir_p "src/obj/zerocoin"
-      system "make", "-C", "src", "-f", "makefile.osx", "USE_UPNP=#{upnp_build_var}"
+      system "make", "-C", "src", "-f", "makefile.osx", "USE_UPNP=#{upnp_build_var}", "--with-incompatible-bdb"
       bin.install "src/gridcoinresearchd"
     end
 
